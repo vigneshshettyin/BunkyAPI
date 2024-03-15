@@ -1,0 +1,11 @@
+[MASTER]
+extension-pkg-whitelist=django
+
+[MESSAGES CONTROL]
+disable=I0011, C0114, C0115, C0116
+
+[TYPECHECK]
+ignore_missing_imports=yes
+
+[REPORTS]
+ignore=migrations, __init__.py
