@@ -22,19 +22,12 @@ class CreditTransaction(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        # Calculate total_price based on price_per_litre and volume
-        self.total_price = self.price_per_litre * self.volume
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"Transaction for {self.volume} liters at {self.price_per_litre}/liter"
-
-    def clean(self):
-        # Fetch price_per_litre from associated Product model
         if self.product:
             self.price_per_litre = self.product.price
         else:
             raise ValueError("Product must be specified")
+        self.total_price = self.price_per_litre * self.volume
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Credit Transactions"
