@@ -1,6 +1,7 @@
-from rest_framework import routers
-from api.views import LoginViewSet
+from api.views import LoginViewSet, ProductViewSet
+from django.urls import path, include
 
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r"login", LoginViewSet, basename="login")
+urlpatterns = [
+    path("users/login/", LoginViewSet.as_view({"post": "create"}), name="user-login"),
+    path("products/", ProductViewSet.as_view(), name="product-list"),
+]
