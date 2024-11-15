@@ -31,3 +31,4 @@ class CreditTransaction(models.Model):
 
     class Meta:
         verbose_name_plural = "Credit Transactions"
+        ordering = ["-date_created"]
