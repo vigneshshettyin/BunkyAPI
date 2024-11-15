@@ -10,6 +10,9 @@ class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["code"]
+
     def __str__(self):
         return self.code
 
