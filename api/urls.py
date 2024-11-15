@@ -1,7 +1,14 @@
 from api.views import LoginViewSet, ProductViewSet
 from django.urls import path, include
 
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+
+router.register("users/login", LoginViewSet, basename="user-login")
+router.register("products", ProductViewSet, basename="product-list")
+
+
 urlpatterns = [
-    path("users/login/", LoginViewSet.as_view({"post": "create"}), name="user-login"),
-    path("products/", ProductViewSet.as_view(), name="product-list"),
+    path("", include(router.urls)),
 ]
