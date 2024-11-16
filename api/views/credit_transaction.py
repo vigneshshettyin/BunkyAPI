@@ -1,9 +1,9 @@
 from api.views import BaseViewSet
 from api.models import CreditTransaction
-from api.serializers import CreditSerializer
+from api.serializers import CreditTransactionSerializer
 
-class CreditViewSet(BaseViewSet):
+class CreditTransactionViewSet(BaseViewSet):
     queryset = CreditTransaction.objects.all()
-    serializer_class = CreditSerializer
+    serializer_class = CreditTransactionSerializer
     search_fields = ['customer__name', 'product__code', 'vehicle_number']
 
