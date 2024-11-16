@@ -1,17 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+from api.models.base import BaseModel
 
 
-class Product(models.Model):
+class Product(BaseModel):
     code = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
+    is_fuel = models.BooleanField(default=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ["code"]
 
     def __str__(self):
         return self.code
