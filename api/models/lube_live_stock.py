@@ -11,6 +11,7 @@ class LubeLiveStock(models.Model):
     class Meta:
         managed = False
         db_table = "api_current_lube_stock"
+        ordering = ["product_id"]
 
     def __str__(self):
         return self.product_name
