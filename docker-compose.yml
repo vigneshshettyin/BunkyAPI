@@ -1,0 +1,20 @@
+services:
+  api:
+    image: vigneshshettyin/bunky-api:latest
+    ports:
+      - "8005:8000"
+    environment:
+      DEBUG: False
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: 8005
+    networks:
+      nginx-proxy-manager_default:
+        ipv4_address: 172.18.0.10
+
+networks:
+  nginx-proxy-manager_default:
+    external: true
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16

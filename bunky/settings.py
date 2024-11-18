@@ -10,22 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-el#96op5*u*@xf6*6oaf2-2(q!2=7s!0dp^pd-it90!a+ed4n4"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+SECRET_KEY = env("SECRET_KEY", default="django-secret-key")
+DEBUG = env("DEBUG", default=True)
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -82,20 +78,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bunky.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+PG_DATABASE = urlparse(env("DATABASE_URL"))
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bunkydb",
-        "USER": "avnadmin",
-        "PASSWORD": "AVNS_NEmjOyTbxkk1z9B8m_H",
-        "HOST": "pg-vscloud-vigneshshetty-3762.a.aivencloud.com",
-        "PORT": "20395",
+        "NAME": PG_DATABASE.path[1:],
+        "USER": PG_DATABASE.username,
+        "PASSWORD": PG_DATABASE.password,
+        "HOST": PG_DATABASE.hostname,
+        "PORT": PG_DATABASE.port,
     }
 }
+
 
 
 # Password validation
@@ -152,3 +147,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100
 }
 
+if not DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
+        "rest_framework.renderers.JSONRenderer",
+    ]
