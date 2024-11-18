@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
 import environ
 from pathlib import Path
@@ -22,7 +23,9 @@ environ.Env.read_env()
 SECRET_KEY = env("SECRET_KEY", default="django-secret-key")
 DEBUG = env("DEBUG", default=True)
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://test.vshetty.dev",]
+CSRF_TRUSTED_ORIGINS = [
+    "https://test.vshetty.dev",
+]
 
 # Application definition
 
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
     "drf_yasg",
@@ -52,14 +56,10 @@ MIDDLEWARE = [
 ROOT_URLCONF = "bunky.urls"
 
 SWAGGER_SETTINGS = {
-      'SECURITY_DEFINITIONS': {
-         'DRF Token': {
-               'type': 'apiKey',
-               'name': 'Authorization',
-               'in': 'header'
-         }
-      }
-   }
+    "SECURITY_DEFINITIONS": {
+        "DRF Token": {"type": "apiKey", "name": "Authorization", "in": "header"}
+    }
+}
 
 TEMPLATES = [
     {
@@ -79,7 +79,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bunky.wsgi.application"
 
-PG_DATABASE = urlparse(env("DATABASE_URL", default="postgres://user:pwd@pg-vscloud.io:5432/bunkydb"))
+PG_DATABASE = urlparse(
+    env("DATABASE_URL", default="postgres://user:pwd@pg-vscloud.io:5432/bunkydb")
+)
 
 DATABASES = {
     "default": {
@@ -91,7 +93,6 @@ DATABASES = {
         "PORT": PG_DATABASE.port,
     }
 }
-
 
 
 # Password validation
@@ -129,10 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 # Base URL for serving static files
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # add full path to static root
-STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -144,8 +145,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 100
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 100,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ],
 }
 
 if not DEBUG:

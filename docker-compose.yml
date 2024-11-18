@@ -4,7 +4,7 @@ services:
     ports:
       - "8008:8008"
     environment:
-      DEBUG: True
+      DEBUG: False
       SECRET_KEY: ${SECRET_KEY}
       DATABASE_URL: ${DATABASE_URL}
     networks:
