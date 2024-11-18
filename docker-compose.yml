@@ -10,7 +10,7 @@ services:
       PORT: 8005
     networks:
       nginx-proxy-manager_default:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.18.0.12
 
 networks:
   nginx-proxy-manager_default:

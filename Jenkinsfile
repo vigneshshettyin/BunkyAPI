@@ -7,6 +7,7 @@ pipeline {
         IMAGE_NAME = 'bunky-api'
         DOCKER_CREDENTIALS = credentials('dockerHub')
         DATABASE_URL = credentials('DATABASE_URL')
+        SECRET_KEY = credentials('SECRET_KEY')
         DOCKER_REPO = "${DOCKER_CREDENTIALS_USR}/bunky-api:latest"
     }
 
