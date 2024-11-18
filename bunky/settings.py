@@ -78,7 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bunky.wsgi.application"
 
-PG_DATABASE = urlparse(env("DATABASE_URL"))
+PG_DATABASE = urlparse(env("DATABASE_URL", default="postgres://user:pwd@pg-vscloud.io:5432/bunkydb"))
 
 DATABASES = {
     "default": {
