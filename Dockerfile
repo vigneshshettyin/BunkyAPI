@@ -33,4 +33,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Run the application
-CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:8000", "bunky.wsgi:application"]
+CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:8008", "bunky.wsgi:application"]

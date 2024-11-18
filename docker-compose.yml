@@ -2,7 +2,7 @@ services:
   api:
     image: vigneshshettyin/bunky-api:latest
     ports:
-      - "8008:8000"
+      - "8008:8008"
     environment:
       DEBUG: False
       SECRET_KEY: ${SECRET_KEY}
