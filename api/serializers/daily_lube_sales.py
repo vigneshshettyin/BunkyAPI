@@ -17,7 +17,6 @@ class DailyLubeSalesSerializer(serializers.ModelSerializer):
         model = DailyLubeSales
         fields = (
             "id",
-            "user",
             "product",
             "product_name",
             "product_price",
