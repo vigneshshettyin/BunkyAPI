@@ -22,7 +22,7 @@ environ.Env.read_env()
 SECRET_KEY = env("SECRET_KEY", default="django-secret-key")
 DEBUG = env("DEBUG", default=True)
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://test.vshetty.dev",]
 
 # Application definition
 
