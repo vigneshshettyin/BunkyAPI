@@ -1,23 +1,36 @@
+# Use a lightweight base image
 FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Environment variables for Python
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    DEBUG=False
 
-ENV DEBUG False
-
+# Set the working directory
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
+# Install only necessary system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy only the requirements file first for dependency installation
+COPY ./config/prod.txt /app/config/prod.txt
+COPY ./config/base.txt /app/config/base.txt
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r /app/config/prod.txt
+
+# Copy the rest of the application code
 COPY . /app/
 
-RUN pip install --no-cache-dir -r ./config/prod.txt
-
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
+# Expose the application's port
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "bunky.wsgi:application"]
+# Run the application
+CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:8000", "bunky.wsgi:application"]
