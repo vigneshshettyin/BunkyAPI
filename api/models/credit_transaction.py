@@ -22,6 +22,7 @@ class CreditTransaction(BaseModel):
         if self.product:
             self.price_per_litre = self.product.price
         else:
-            raise ValueError("Product must be specified")
+            raise ValueError("Product is required")
         self.total_price = self.price_per_litre * self.volume
+        self.vehicle_number = self.vehicle_number.replace(" ", "").upper()
         super().save(*args, **kwargs)
