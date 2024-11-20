@@ -26,7 +26,7 @@ from django.views.static import serve
 schema_view = get_schema_view(
     openapi.Info(
         title="Bunky API v1",
-        author="Vignesh Shetty & Vijesh Shetty",
+        author="Vignesh Shetty",
         default_version="v1",
         description="Bunky API Documentation",
         terms_of_service="https://linktree.vshetty.dev",
@@ -41,9 +41,10 @@ urlpatterns = [
     path("api/v1/", include("api.urls")),
     path("admin/", admin.site.urls),
     path(
-        "",
+        "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
+      path("", schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path("static/<path:path>", serve, {"document_root": settings.STATIC_ROOT}),
 ]
