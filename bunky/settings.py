@@ -24,7 +24,7 @@ SECRET_KEY = env("SECRET_KEY", default="django-secret-key")
 DEBUG = env("DEBUG", default=True)
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-    "https://test.vshetty.dev",
+    "https://api.lube.eurl.dev",
 ]
 
 # Application definition
